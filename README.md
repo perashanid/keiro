@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Keiro
+
+**Intelligent outreach automation platform for B2B sales teams.**
+
+Keiro helps sales teams discover companies, build targeted lists, and run personalized email campaigns—all from one unified platform.
+
+https://github.com/user-attachments/assets/brag.mp4
+
+## Features
+
+- 🎯 **Smart Discovery** - Find and qualify companies using Google Places integration
+- 👥 **Contact Management** - Organize people and companies with a powerful CRM
+- 📧 **Email Campaigns** - Build multi-step sequences with Gmail integration
+- 📊 **Analytics Dashboard** - Track campaign performance and engagement metrics
+- 🔗 **List Management** - Create and manage targeted prospect lists
+- ⚡ **Automation** - Set up intelligent workflows to streamline outreach
+
+## Tech Stack
+
+- **Framework:** Next.js 15 with App Router
+- **Database:** PostgreSQL with Prisma ORM
+- **State Management:** Zustand
+- **Styling:** Tailwind CSS
+- **Auth:** Google OAuth 2.0
+- **Email:** Gmail API integration
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+ and npm
+- PostgreSQL database
+- Google Cloud project with Gmail API enabled
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/yourusername/keiro.git
+cd keiro
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up environment variables:
+```bash
+cp .env.example .env
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Edit `.env` and add your configuration:
+```
+DATABASE_URL="postgresql://..."
+GOOGLE_CLIENT_ID="your-client-id"
+GOOGLE_CLIENT_SECRET="your-client-secret"
+GOOGLE_PLACES_API_KEY="your-places-api-key"
+```
 
-## Learn More
+4. Initialize the database:
+```bash
+npx prisma migrate dev
+npx prisma db seed
+```
 
-To learn more about Next.js, take a look at the following resources:
+5. Run the development server:
+```bash
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Open [http://localhost:3000](http://localhost:3000) to see the application.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+src/
+├── app/              # Next.js app router pages and API routes
+├── components/       # React components
+│   ├── ui/          # Base UI components
+│   ├── app/         # Application layout components
+│   ├── marketing/   # Landing page components
+│   └── [features]/  # Feature-specific components
+├── lib/             # Utilities and business logic
+│   ├── server/      # Server-side database access
+│   ├── store/       # Zustand state stores
+│   ├── providers/   # External API integrations
+│   └── mock/        # Mock data for development
+└── hooks/           # Custom React hooks
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
