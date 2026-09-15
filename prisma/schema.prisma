@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Companies, real: hand-curated (source "curated", seeded from
+// prisma/seed.ts) or found live via Google Places (source "google_places").
+// Curated rows have the richer intelligence fields filled in from real
+// research; google_places rows only have what a directory listing actually
+// gives you — the rest stay null rather than guessed.
+model Company {
+  id            String   @id @default(cuid())
+  name          String
+  legalName     String?
+  website       String
+  domain        String
+  industry      String
+  sector        String?
+  division      String
+  city          String
+  employeeRange String?
+  employeeCount Int?
+  revenueRange  String?
+  foundedYear   Int?
+  businessType  String?
+  description   String?
+  products      String? // JSON-encoded string[]
+  technologies  String? // JSON-encoded string[]
+  growthSignals String? // JSON-encoded string[]
+  score         Int?
+  logoInitials  String
+  source        String   @default("curated") // "curated" | "google_places"
+  placeId       String?  @unique // Google Places id, set when source = google_places
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([industry])
+  @@index([division])
+}
+
+// Caches a company-discovery search by (sector, location) so a repeat search
+// serves from the database instead of calling the paid Places API again.
+model PlacesSearchCache {
+  id        String   @id @default(cuid())
+  sector    String
+  location  String
+  companyIds String  // JSON-encoded string[] of Company.id this search returned
+  fetchedAt DateTime @default(now())
+
+  @@unique([sector, location])
+}
